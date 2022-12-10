@@ -50,26 +50,6 @@ Navigate to the folder that contains the sample. Double click the solution file,
 
 In Visual Studio, in Solution Explorer, right click **Solution 'WFPSampler' (5 projects)**, and choose **Configuration Manager**. Set the configuration and the platform. Make sure that the configuration and platform are the same for all projects. Do not check the **Deploy** boxes.
 
-## Set the runtime library for the user-mode application, library, and service
-
-In Solution Explorer, right-click the **WFPSampler** user-mode application project (under the **Exe** node), and choose **Properties.** Navigate to **Configuration Properties \> C/C++ \> Code Generation**. For **Runtime Library**, select **Multi-threaded Debug (/MTd)**. Click **OK**.
-
-Repeat this process for the **WFPSampler** user-mode library (under the **Lib** node) and the **WFPSampler** user-mode service (under the **Svc** node).
-
-## Edit the restart setting in the sample installation script
-
-Open the WfpSamplerInstall.cmd file (in the scripts folder) in Visual Studio.
-
-Change this line:
-
-`RunDLL32.Exe syssetup,SetupInfObjectInstallAction DefaultInstall 131 %WinDir%\System32\Drivers\WFPSamplerCalloutDriver.Inf`
-
-to this:
-
-`RunDLL32.Exe syssetup,SetupInfObjectInstallAction DefaultInstall 132 %WinDir%\System32\Drivers\WFPSamplerCalloutDriver.Inf`
-
-For more information about this setting, see the Remarks section for the [**InstallHinfSection**](https://docs.microsoft.com/windows/win32/api/setupapi/nf-setupapi-installhinfsectiona) function.
-
 ## Build the sample using Visual Studio
 
 In Visual Studio, on the **Build** menu, choose **Build Solution**.
@@ -117,11 +97,29 @@ Before you automatically deploy a driver, you must provision the target computer
 
 After you have provisioned the target computer, continue with these steps:
 
-1. On the host computer, in Visual Studio, in Solution Explorer, right-click **package** (lower case), and choose **Properties**. Navigate to **Configuration Properties \> Driver Install \> Deployment**.
+1. On the host computer, in Visual Studio, in Solution Explorer, right-click **Sys\WFPSamplerCalloutDriver** and choose **Properties**. 
 
-1. Check **Enable deployment**, and check **Remove previous driver versions before deployment**. For **Target Computer Name**, select the name of a target computer that you provisioned previously. Select **Do not install**. Click **OK**.
+1. Ensure that only a single **Configuration** and a single **Platform** are selected from the drop-downs at the top of the dialog. (If you select "All" in either drop-down, the **Deployment** Property Page won't appear.)
 
-1. In the **Build** menu, choose **Build Solution**.
+1. Navigate to **Configuration Properties \> Driver Install \> Deployment**.
+
+1. Click the arrow under **Target Device Name** and choose click on **<Configure Devices\>**.
+
+1. Click **Add New Device**.
+
+1. Give the device a friendly **Display Name** and then add the host name or IP address as the **Network host name** and click **Next**.
+
+1. Verify the settings are for **Kernel Mode** and click **Next**. 
+
+1. It may take some time to copy files. Click **Finish** when the process is complete.
+
+1. Click **OK**.
+
+1. Make sure **Remove previous driver versions...** and **Do No Install** are both selected.
+
+1. Click **OK** to close the Property dialog.
+
+1. In the **Build** menu, choose **Build Solution** (or press **Ctrl + Shift + B**).
 
 1. Copy the following files to the DriverTest\\Drivers folder on the target computer:
 

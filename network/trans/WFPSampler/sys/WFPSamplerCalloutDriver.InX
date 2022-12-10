@@ -48,7 +48,7 @@
 
 [DefaultUninstall.nt$ARCH$]
    DelFiles = WFPSamplerCalloutDriver.DriverFiles
-   DelReg   = WFPCalloutClassReg
+   DelReg   = WFPCalloutsClassReg
 
 [DefaultUninstall.nt$ARCH$.Services]
    DelService = %WFPSamplerCalloutDriverServiceName%,0x200                                         ;/// SPSVCINST_STOPSERVICE
@@ -62,16 +62,6 @@
 
 [WFPSamplerCalloutDriver.DriverFiles]
    WFPSamplerCalloutDriver.sys,,,0x00000040                                                        ;/// COPYFLG_OVERWRITE_OLDER_ONLY
-
-[WFPSamplerCalloutDriver.NT.CoInstallers]
-   AddReg    = WFPSamplerCalloutDriver.CoInstaller.AddReg
-   CopyFiles = WFPSamplerCalloutDriver.CoInstaller.CopyFiles
-
-[WFPSamplerCalloutDriver.CoInstaller.AddReg]
-   HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
-
-[WFPSamplerCalloutDriver.CoInstaller.CopyFiles]
-   WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
 
 [WFPSamplerCalloutDriver.Service]
    DisplayName    = %WFPSamplerCalloutDriverServiceName%
